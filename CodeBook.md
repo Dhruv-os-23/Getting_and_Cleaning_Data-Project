@@ -1,29 +1,56 @@
-## Getting and Cleaning Data Project
+**Code Book for Coursera Getting and Cleaning Data Course Project**
 
-Author: Michael Galarnyk
+This code book pertains to the "tidy_data.txt" dataset, which is the result of processing and cleaning data from accelerometers in the Samsung Galaxy S smartphone. The dataset consists of space-separated values, where the first row contains variable names, and subsequent rows contain corresponding values.
 
-### Description
-Additional information about the variables, data and transformations used in the course project for the Johns Hopkins Getting and Cleaning Data course.
+**Variables**
 
-### Source Data
-Data + Description can be found here [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
+The dataset includes the following variables:
 
-### Data Set Information
-The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+1. **Subject** (Identifier): An integer ranging from 1 to 30, representing the subject who participated in the study.
 
-The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain.
+2. **Activity** (Identifier): A string with six possible values, denoting the activity the subject was engaged in. Possible activities include:
+   - WALKING: Subject was walking
+   - WALKING_UPSTAIRS: Subject was walking upstairs
+   - WALKING_DOWNSTAIRS: Subject was walking downstairs
+   - SITTING: Subject was sitting
+   - STANDING: Subject was standing
+   - LAYING: Subject was laying
 
-### Attribute Information
-For each record in the dataset it is provided: 
-- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration. 
-- Triaxial Angular velocity from the gyroscope. 
-- A 561-feature vector with time and frequency domain variables. 
-- Its activity label. 
-- An identifier of the subject who carried out the experiment.
+3. **Average of Measurements**: The dataset contains 79 averaged signal measurements, which are all floating-point values normalized and bounded within [-1, 1]. The measurements are classified into two domains:
 
-## Please see the README.md for how the following instructions are implemented [README.md](https://github.com/mGalarnyk/datasciencecoursera/blob/master/3_Getting_and_Cleaning_Data/README.md)
-### 1. Merge the training and the test sets to create one data set.
-### 2. Extracts only the measurements on the mean and standard deviation for each measurement.
-### 3. Uses descriptive activity names to name the activities in the data set
-### 4. Appropriately labels the data set with descriptive variable names.
-### 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+   **Time-Domain Signals**: These are results of capturing raw accelerometer and gyroscope signals and include the following categories:
+   - Body Acceleration (in X, Y, and Z directions)
+   - Gravity Acceleration (in X, Y, and Z directions)
+   - Body Acceleration Jerk (derivative of acceleration)
+   - Body Angular Velocity (in X, Y, and Z directions)
+   - Body Angular Velocity Jerk (derivative of angular velocity)
+   - Magnitude (of acceleration, gravity acceleration, acceleration jerk, angular velocity, and angular velocity jerk)
+
+   **Frequency-Domain Signals**: These are obtained using the Fast Fourier Transform (FFT) on some of the time-domain signals and include the following categories:
+   - Body Acceleration (in X, Y, and Z directions)
+   - Body Acceleration Jerk (derivative of acceleration)
+   - Body Angular Velocity (in X, Y, and Z directions)
+   - Magnitude (of body acceleration, acceleration jerk, body angular velocity, and angular velocity jerk)
+
+For each of the above categories, the dataset includes the following measurements:
+- Mean
+- Standard Deviation
+- Mean Frequency (for frequency-domain signals)
+
+**Transformations**
+
+The dataset was derived from the source data by applying the following transformations:
+
+1. Merging Training and Test Sets: The training and test datasets were combined to create a unified dataset.
+
+2. Extracting Mean and Standard Deviation Measurements: Only the measurements related to mean and standard deviation were retained, and other measurements were discarded.
+
+3. Descriptive Activity Names: Numeric activity codes were replaced with descriptive activity names to enhance interpretability.
+
+4. Descriptive Variable Names: Variable names were modified for clarity and readability. Special characters were removed, and abbreviations were expanded.
+
+5. Correction of Typo: A typographical error ("BodyBody") in the variable names was corrected.
+
+6. Creating a Tidy Dataset: The final dataset was created by computing the average of each variable for each activity and each subject.
+
+The entire data collection and transformation process was implemented using the "run_analysis.R" R script. For detailed usage instructions and additional background information, refer to the accompanying README.md file.
